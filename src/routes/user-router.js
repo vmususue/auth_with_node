@@ -9,6 +9,7 @@ userRouter
   .get('/users', UserController.getAll)
   .post('/users', UserController.insert)
   .get('/users/:id', UserController.getSingle)
+  .put('/users/:id', UserController.updateSingle)
 
 
 export default userRouter;

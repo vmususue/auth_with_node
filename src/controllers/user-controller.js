@@ -41,5 +41,24 @@ UserController.getSingle = async (req, res) => {
   }
 }
 
+UserController.updateSingle = async (req, res) => {
+  try {
+    const id_usuario = parseInt(req.params.id);
+
+    const { nombres, apellidos, fecha_nacimiento, id_genero, 
+           telefono,  fecha_registro, estado, correo } = req.body;
+
+    const arrayValues = [ id_usuario, nombres, apellidos,
+                          fecha_nacimiento, id_genero, telefono,
+                          fecha_registro, estado, correo ];
+
+    const response = await UserModel.updateSingle(arrayValues);
+    console.log(response);
+    res.status(200).json({'Message': 'User updated'});
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 
 export default UserController;

@@ -33,5 +33,14 @@ UserModel.getSingle = async (user_id) => {
   }
 }
 
+UserModel.updateSingle = async (arrayValues) => {
+  try {
+    return await conn.query(queryStrings.queryUpdate, arrayValues);
+  } catch (err) {
+    console.error(err)
+    return err;
+  }
+}
+
 
 export default UserModel;
