@@ -6,7 +6,8 @@ import UserController from '../controllers/user-controller.js'
 const userRouter = express.Router();
 
 userRouter
-  .get('/', UserController.getAll)
+  .get('/users', UserController.getAll)
+  .post('/users', UserController.insert)
 
 
 export default userRouter;
