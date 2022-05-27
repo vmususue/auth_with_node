@@ -60,5 +60,16 @@ UserController.updateSingle = async (req, res) => {
   }
 }
 
+UserController.deleteSingle = async (req, res) => {
+
+  try {
+    const user_id = parseInt(req.params.id);
+    await UserModel.deleteSingle(user_id);
+    res.status(200).send({'Message': 'User deleted'});
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 
 export default UserController;

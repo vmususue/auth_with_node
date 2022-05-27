@@ -10,6 +10,6 @@ userRouter
   .post('/users', UserController.insert)
   .get('/users/:id', UserController.getSingle)
   .put('/users/:id', UserController.updateSingle)
-
+  .delete('/users/:id', UserController.deleteSingle)
 
 export default userRouter;

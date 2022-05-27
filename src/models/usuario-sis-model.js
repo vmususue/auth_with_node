@@ -42,5 +42,13 @@ UserModel.updateSingle = async (arrayValues) => {
   }
 }
 
+UserModel.deleteSingle = async (user_id) => {
+  try {
+    return await conn.query(queryStrings.queryDelete, [user_id]);
+  } catch (err) {
+    return err;
+  }
+}
+
 
 export default UserModel;
