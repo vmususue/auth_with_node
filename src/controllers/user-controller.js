@@ -50,7 +50,7 @@ UserController.updateSingle = async (req, res) => {
 
     const arrayValues = [ id_usuario, nombres, apellidos,
                           fecha_nacimiento, id_genero, telefono,
-                          fecha_registro, estado, correo ];
+                          fecha_registro, estado, correo, id_usuario ];
 
     const response = await UserModel.updateSingle(arrayValues);
     console.log(response);
