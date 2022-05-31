@@ -13,23 +13,6 @@ UserController.getAll = async (req, res) => {
   }
 }
 
-UserController.insert = async (req, res) => {
-  try {
-    const { id_usuario, nombres, apellidos,
-            fecha_nacimiento, id_genero, telefono,
-            fecha_registro, estado, correo } = req.body;
-
-    const arrayValues = [ id_usuario, nombres, apellidos,
-                          fecha_nacimiento, id_genero, telefono,
-                          fecha_registro, estado, correo ];
-
-    await UserModel.insert(arrayValues);
-    res.status(200).json({'Message': 'User added'});
-  } catch (err) {
-    console.error(err);
-  }
-}
-
 UserController.getSingle = async (req, res) => {
 
   try {

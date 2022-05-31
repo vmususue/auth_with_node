@@ -26,8 +26,17 @@ UserModel.insert = async (arrayValues) => {
 }
 
 UserModel.getSingle = async (user_id) => {
+
   try {
     return await conn.query(queryStrings.querySingle, [user_id]);
+  } catch (err) {
+    return err;
+  }
+}
+
+UserModel.getSingleEmail = async (email) => {
+  try {
+    return await conn.query(queryStrings.querySingleEmail, [email]);
   } catch (err) {
     return err;
   }
