@@ -11,11 +11,11 @@ AuthController.register = async (req, res) => {
       const { nombres: name, apellidos,
               fecha_nacimiento, id_genero, telefono,
               fecha_registro, estado, correo, contraseña } = req.body;
-  
+
       const arrayValues = [ name, apellidos,
                             fecha_nacimiento, id_genero, telefono,
                             fecha_registro, estado, correo, contraseña ];
-  
+
       const userEmail = await UserModel.getSingleEmail(correo);
       if (userEmail.rows[0]) {
         return res.status(400).json({'Message': 'the user with that email already exist'})
@@ -27,7 +27,7 @@ AuthController.register = async (req, res) => {
       const user =  await UserModel.insert(arrayValues);
 
       const { id_usuario, nombres} = user.rows[0];
-      
+
       const token = generarJWT(id_usuario, nombres);
 
       res.status(200).json({
@@ -43,6 +43,35 @@ AuthController.register = async (req, res) => {
 }
 
 AuthController.login = async (req, res) => {
+
+  try {
+    const { correo, contraseña } = req.body;
+
+    const user = await UserModel.getSingleEmail(correo);
+    if (!user.rows[0]) {
+      return res.status(400).json({ 'Message': 'the user with that email doesn\'t exist' })
+    }
+
+    const validatePass = bcrypt.compareSync(contraseña, user.rows[0].contraseña);
+    if (!validatePass) {
+      return res.status(400).json({'Message': 'The password is wrong'})
+    }
+
+    const { id_usuario, nombres } = user.rows[0];
+
+    const token = generarJWT(id_usuario, nombres);
+
+    res.status(200).json({
+      'Message': 'The password is correct',
+      token
+    })
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      'Message': 'Fatal Error'
+    })
+  }
 
 }
 
