@@ -4,7 +4,7 @@ import UserModel from '../models/usuario-sis-model.js';
 import bcrypt from 'bcrypt';
 import generarJWT from '../helpers/jwt.js';
 import { request, response } from 'express';
-import jwt from 'jsonwebtoken'
+
 
 const AuthController = () => {};
 
@@ -77,26 +77,15 @@ AuthController.login = async (req, res) => {
 
 }
 
-AuthController.refresh = async (req = request, res = response) => {
+AuthController.refresh = (req = request, res = response) => {
 
-  const tokenHeader = req.header('token');
-  if (!tokenHeader) {
-    res.status(401).json({'Message': 'The token doesn\' exist'});
-  }
+  const { id_usuario, nombres } = req;
+  const token = generarJWT(id_usuario, nombres);
 
-  try {
-    const payload = jwt.verify(tokenHeader, process.env.KEY_TOKEN_JWT);
-    const { id_usuario, nombres } = payload;
-    const token = generarJWT(id_usuario, nombres);
-
-    res.status(200).json({
-      'Message': 'New token generated',
-      token
-    })
-
-  } catch (error) {
-    res.status(401).json({ 'Message': 'Token error' });
-  }
+  res.status(200).json({
+    'Message': 'New token generated',
+    token
+  })
 
 }
 
