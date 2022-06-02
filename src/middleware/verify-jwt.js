@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 const jwtVerify = (req, res, next) => {
-  const tokenHeader = req.header('token');
+  const tokenHeader = req.header('token') || req.query.token;
   if (!tokenHeader) {
     return res.status(401).json({ 'Message': 'The token doesn\' exist' });
   }
@@ -19,3 +19,4 @@ const jwtVerify = (req, res, next) => {
 }
 
 export default jwtVerify;
+
