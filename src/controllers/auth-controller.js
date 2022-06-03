@@ -12,11 +12,11 @@ AuthController.register = async (req, res) => {
     try {
       const { nombres: name, apellidos,
               fecha_nacimiento, id_genero, telefono,
-              fecha_registro, estado, correo, contraseña } = req.body;
+              fecha_registro, estado, correo, contraseña, tipo_acceso: id_acceso } = req.body;
 
       const arrayValues = [ name, apellidos,
                             fecha_nacimiento, id_genero, telefono,
-                            fecha_registro, estado, correo, contraseña ];
+                            fecha_registro, estado, correo, id_acceso, contraseña  ];
 
       const userEmail = await UserModel.getSingleEmail(correo);
       if (userEmail.rows[0]) {
@@ -28,9 +28,9 @@ AuthController.register = async (req, res) => {
 
       const user =  await UserModel.insert(arrayValues);
 
-      const { id_usuario, nombres} = user.rows[0];
+      const { id_usuario, nombres, id_tipo_acceso } = user.rows[0];
 
-      const token = generarJWT(id_usuario, nombres);
+      const token = generarJWT(id_usuario, nombres, id_tipo_acceso);
 
       res.status(200).json({
         'Message': 'User added',
@@ -59,9 +59,9 @@ AuthController.login = async (req, res) => {
       return res.status(400).json({'Message': 'The password is wrong'})
     }
 
-    const { id_usuario, nombres } = user.rows[0];
+    const { id_usuario, nombres, id_tipo_acceso } = user.rows[0];
 
-    const token = generarJWT(id_usuario, nombres);
+    const token = generarJWT(id_usuario, nombres, id_tipo_acceso);
 
     res.status(200).json({
       'Message': 'The password is correct',
@@ -79,8 +79,8 @@ AuthController.login = async (req, res) => {
 
 AuthController.refresh = (req = request, res = response) => {
 
-  const { id_usuario, nombres } = req;
-  const token = generarJWT(id_usuario, nombres);
+  const { id_usuario, nombres, id_tipo_acceso } = req;
+  const token = generarJWT(id_usuario, nombres, id_tipo_acceso);
 
   res.status(200).json({
     'Message': 'New token generated',
