@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import UserModel from '../models/usuario-sis-model.js';
 
 const jwtVerify = async (req, res, next) => {
-  const tokenHeader = req.header('token');
+  const tokenHeader = req.header('token') || req.query.token;
   if (!tokenHeader) {
     return res.status(401).json({ 'Message': 'The token doesn\' exist' });
   }
@@ -29,3 +29,4 @@ const jwtVerify = async (req, res, next) => {
 }
 
 export default jwtVerify;
+
