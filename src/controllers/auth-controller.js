@@ -13,11 +13,11 @@ const AuthController = () => {};
 
 AuthController.register = async (req, res) => {
     try {
-      const { nombres: name, apellidos,
+      const { id_usuario: id_user, nombres: name, apellidos,
               fecha_nacimiento, id_genero, telefono,
               fecha_registro, estado, correo, contraseña, tipo_acceso: id_acceso } = req.body;
 
-      const arrayValues = [ name, apellidos,
+      const arrayValues = [ id_user, name, apellidos,
                             fecha_nacimiento, id_genero, telefono,
                             fecha_registro, estado, correo, id_acceso, contraseña  ];
 
@@ -138,7 +138,7 @@ AuthController.resetPassword = async (req, res) => {
       'Message': 'Your password has been changed',
 
     })
-  } catch (error) {
+  } catch (err) {
     console.log(err);
     res.status(500).json({
       'Message': 'Fatal Error'
