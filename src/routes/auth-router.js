@@ -10,6 +10,8 @@ authRouter
   .post('/login', AuthController.login)
   .post('/register', AuthController.register)
   .get('/refresh', jwtVerify, AuthController.refresh)
+  .post('/forgot-password', AuthController.forgotPassword)
+  .put('/reset-password', jwtVerify, AuthController.resetPassword)
 
 export default authRouter;
 

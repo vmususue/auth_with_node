@@ -59,5 +59,12 @@ UserModel.deleteSingle = async (user_id) => {
   }
 }
 
+UserModel.resetPassword = async (user_id, password) => {
+  try {
+    return await conn.query(queryStrings.queryUpdatePassword, [password, user_id]);
+  } catch (err) {
+    return err;
+  }
+}
 
 export default UserModel;
